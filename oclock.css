@@ -1,0 +1,45 @@
+body {
+  background-size: cover;
+  height: 100%;
+  font-family: sans-serif;
+  background-color: black;
+  overflow: hidden;
+}
+
+.pageDisplay {
+  display: grid;
+}
+
+.controls {
+  z-index: 200;
+}
+
+#timeDisplay1 {
+  display: block;
+}
+
+#timeDisplay2 {
+  display: none;
+}
+
+.hhmmss {
+  line-height: 90vh;
+  text-align: center;
+  font-size: 25vw;
+  color: yellow;
+}
+
+.hhmm {
+  margin: -5vh 0;
+  line-height: 75vh;
+  text-align: center;
+  font-size: min(40vw, 75vh);
+  color: yellow;
+}
+
+.ss {
+  line-height: 25vh;
+  text-align: center;
+  font-size: 25vh;
+  color: white;
+}
