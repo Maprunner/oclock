@@ -1,4 +1,6 @@
-import "../oclock.css"
+import "../css/oclock.css"
+
+let beep = undefined
 
 function toggleFullScreen() {
   if (!document.fullscreenElement) {
@@ -9,6 +11,11 @@ function toggleFullScreen() {
 }
 
 function toggleTimeDisplay() {
+  if (!beep) {
+    beep = new Audio("/oclock/beep.mp3")
+    beep.play()
+  }
+
   const styles = window.getComputedStyle(timeDisplay1)
   const display1 = styles.getPropertyValue("display")
   if (display1 === "block") {
@@ -93,14 +100,25 @@ function updateTime() {
   hhmmss.innerText = getHHMMSS(dateObj)
   hhmm.innerText = getHHMM(dateObj)
   ss.innerText = getSS(dateObj)
+  if (beep) {
+    const secs = dateObj.getSeconds()
+    if (secs > 54 || secs === 0) {
+      // need to stop and reset since sound file may be longer than one second
+      beep.pause()
+      beep.currentTime = 0
+      beep.play()
+    }
+  }
 }
 
-requestWakeLock()
+export function initOclock() {
+  requestWakeLock()
 
-// show time at start-up
-updateTime()
-
-// update time on 1 second timer
-setInterval(function () {
+  // show time at start-up
   updateTime()
-}, 1000)
+
+  // update time on 1 second timer
+  setInterval(function () {
+    updateTime()
+  }, 1000)
+}
